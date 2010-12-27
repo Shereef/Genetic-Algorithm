@@ -6,3 +6,15 @@
 *.vcxproj
 *.filters
 *.user
+*.exe
+*.ilk
+*.pdb
+*.tlog
+*.manifest
+*.res
+*.log
+*.obj
+*.idb
+*.lastbuildstate
+*.rc
+*.ipch
