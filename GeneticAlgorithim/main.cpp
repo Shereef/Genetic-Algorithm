@@ -34,12 +34,15 @@ int main()
 		cout << "\n";
 	}
 	sort(Chromosomes.begin(), Chromosomes.end());
+	reverse(Chromosomes.begin(), Chromosomes.end());
 	cout << "==================\n";
 	for(vector<CChromosome>::iterator it = Chromosomes.begin(); it != Chromosomes.end(); it++)
 	{
 		cout << it->m_Fitness;
 		cout << "\n";
 	}
+	
+	cout << "Press Enter (Return) to Exit\n";
 	cout << endl;
 	cin.get();
 	return 0;
