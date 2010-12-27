@@ -9,6 +9,7 @@ public:
 	list<bool> m_aGenes;
 	void CalcFitness();
 	void Print();
-	void CrossOver(CChromosome*);
+	void CrossOver(CChromosome*, bool, int);
 	bool operator<(const CChromosome &rhs) const { return m_Fitness < rhs.m_Fitness; }
+	CChromosome* GetMe() { return this; }
 };

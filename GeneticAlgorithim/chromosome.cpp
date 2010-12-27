@@ -24,7 +24,7 @@ void CChromosome::Print()
 	printf("\tFitness: %d\n",m_Fitness);
 }
 
-void CChromosome::CrossOver(CChromosome* pChrm)
+void CChromosome::CrossOver(CChromosome* pChrm, bool Left, int Size)
 {
 
 }
