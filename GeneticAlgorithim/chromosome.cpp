@@ -17,9 +17,14 @@ void CChromosome::CalcFitness()
 
 void CChromosome::Print()
 {
-	m_Fitness = 0;
+	m_aGenes.sort();
 	printf("Chromosome: ");
 	for (list<bool>::iterator it=m_aGenes.begin(); it!=m_aGenes.end(); ++it)
 		printf("%d", *it);
 	printf("\tFitness: %d\n",m_Fitness);
+}
+
+void CChromosome::CrossOver(CChromosome* pChrm)
+{
+
 }
