@@ -5,6 +5,7 @@
 #include"chromosome.h"
 using namespace std;
 
+vector<CChromosome> g_Chromosomes;
 
 class CChromosome Create(int Genes)
 {
@@ -19,24 +20,23 @@ class CChromosome Create(int Genes)
 int main()
 {
 	srand( (unsigned)time( NULL ) );
-	vector<CChromosome> Chromosomes;
 	cout << "How many Chromosomes do you want ?\n";
 	int Count = 10, Genes = 6;
 	//cin >> Count;
 	cout << "How many genes do you want in each Chromosome ?\n";
 	//cin >> Genes;
 	for(int i = 0; i < Count; ++i)
-		Chromosomes.push_back(Create(Genes));
+		g_Chromosomes.push_back(Create(Genes));
 	
-	for(vector<CChromosome>::iterator it = Chromosomes.begin(); it != Chromosomes.end(); it++)
+	for(vector<CChromosome>::iterator it = g_Chromosomes.begin(); it != g_Chromosomes.end(); it++)
 	{
 		cout << it->m_Fitness;
 		cout << "\n";
 	}
-	sort(Chromosomes.begin(), Chromosomes.end());
-	reverse(Chromosomes.begin(), Chromosomes.end());
+	sort(g_Chromosomes.begin(), g_Chromosomes.end());
+	reverse(g_Chromosomes.begin(), g_Chromosomes.end());
 	cout << "==================\n";
-	for(vector<CChromosome>::iterator it = Chromosomes.begin(); it != Chromosomes.end(); it++)
+	for(vector<CChromosome>::iterator it = g_Chromosomes.begin(); it != g_Chromosomes.end(); it++)
 	{
 		cout << it->m_Fitness;
 		cout << "\n";
