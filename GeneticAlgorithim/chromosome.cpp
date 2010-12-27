@@ -1,4 +1,5 @@
 #include"chromosome.h"
+#include <stdio.h>
 #include<iostream>
 
 
@@ -12,4 +13,13 @@ void CChromosome::CalcFitness()
 	m_Fitness = 0;
 	for (list<bool>::iterator it=m_aGenes.begin(); it!=m_aGenes.end(); ++it)
 		m_Fitness += *it;
+}
+
+void CChromosome::Print()
+{
+	m_Fitness = 0;
+	printf("Chromosome: ");
+	for (list<bool>::iterator it=m_aGenes.begin(); it!=m_aGenes.end(); ++it)
+		printf("%d", *it);
+	printf("\tFitness: %d\n",m_Fitness);
 }
