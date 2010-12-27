@@ -3,14 +3,10 @@ using namespace std;
 
 class CChromosome
 {
-
-private:
-	int m_Fitness;
-	
 public:
-	//CChromosome();
-	CChromosome(int);
+	CChromosome();
+	int m_Fitness;
 	list<bool> m_aGenes;
-	int GetFitness();
 	void CalcFitness();
+	bool operator<(const CChromosome &rhs) const { return m_Fitness < rhs.m_Fitness; }
 };
