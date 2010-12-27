@@ -1,10 +1,18 @@
 #include"chromosome.h"
 #include<iostream>
 
+/*
+*	CChromosome::CChromosome()
+*	{
+*		m_Fitness = -1;
+*	}
+*/
 
-CChromosome::CChromosome()
+CChromosome::CChromosome(int Genes)
 {
 	m_Fitness = -1;
+	for(int i = 0; i < Genes; ++i)
+		m_aGenes.push_back(rand() % 2);
 }
 
 int CChromosome::GetFitness()
