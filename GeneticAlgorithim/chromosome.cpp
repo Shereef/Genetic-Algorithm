@@ -1,5 +1,4 @@
 #include"chromosome.h"
-#include <stdio.h>
 #include<iostream>
 #include<algorithm>
 
@@ -22,6 +21,17 @@ void CChromosome::Print()
 	for (vector<m_sGene>::iterator it=m_aGenes.begin(); it!=m_aGenes.end(); ++it)
 		printf("%d", *it);
 	printf("\tFitness: %d\n",m_Fitness);
+}
+
+void CChromosome::Print(bool Fitness)
+{
+	printf("Chromosome: ");
+	for (vector<m_sGene>::iterator it=m_aGenes.begin(); it!=m_aGenes.end(); ++it)
+		printf("%d", *it);
+if(Fitness)
+	printf("\tFitness: %d\n",m_Fitness);
+else
+	printf("\n");
 }
 
 void CChromosome::PrintSorted()

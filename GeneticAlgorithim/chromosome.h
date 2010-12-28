@@ -16,6 +16,7 @@ public:
 	vector<m_sGene> m_aGenes;
 	void CalcFitness();
 	void Print();
+	void Print(bool);
 	void PrintSorted();
 	bool operator<(const CChromosome &rhs) const { return m_Fitness < rhs.m_Fitness; }
 };

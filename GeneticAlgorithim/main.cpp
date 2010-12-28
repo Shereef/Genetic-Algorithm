@@ -29,19 +29,26 @@ void Print()
 	}
 }
 
-void Print(bool Numbering)
+void Print(bool Type)
 {
 	int num = 0;
 	for(vector<CChromosome>::iterator it = g_Chromosomes.begin(); it != g_Chromosomes.end(); it++)
 	{
-		cout << ++num;
-		cout << ".\t";
-		it->Print();
+		if(Type)
+		{
+			cout << ++num;
+			cout << ".\t";
+		}
+		it->Print(Type);
 	}
 }
 
 void Sort()
 {
+	for(vector<CChromosome>::iterator it = g_Chromosomes.begin(); it != g_Chromosomes.end(); it++)
+	{
+		it->CalcFitness();
+	}
 	sort(g_Chromosomes.begin(), g_Chromosomes.end());
 	reverse(g_Chromosomes.begin(), g_Chromosomes.end());
 }
@@ -53,26 +60,24 @@ int Average()
 	{
 		Temp += it->m_Fitness;
 	}
-	return Temp/g_Chromosomes.size();
+	if(Temp/g_Chromosomes.size() > g_Genes/2)
+		return Temp/g_Chromosomes.size();
+	else
+		return Temp/g_Chromosomes.size() + 1;
 }
 
 void CrossOver()
 {
-	//Let's see who's below our threshold
 	int From = 0, Ave = Average(), Genes;
 	bool Even = (g_Genes % 2) == 0;
 	Genes = g_Genes/2;
-	cout << "Average" << Ave << "\n";
+	cout << "Average = " << Ave << "\n";
 	for(vector<CChromosome>::iterator it = g_Chromosomes.begin(); it != g_Chromosomes.end(); it++)
 	{
 		if(it->m_Fitness <= Ave)
 			break;
 		From++;
 	}
-
-	
-	vector<m_sGene> Temp1;
-	vector<m_sGene> Temp2;
 	int Count = 0;
 	for(int i = From; i < g_Chromosomes.size()-1; ++i)
 	{
@@ -85,6 +90,31 @@ void CrossOver()
 			g_Chromosomes[i+1].m_aGenes[Elm].m_Gene = Temp;
 		}
 	}
+}
+
+void Mutation()
+{
+	if(g_Chromosomes[g_Count - 1].m_Fitness == g_Genes)
+		return;
+	int From = 0, Ave = Average(), Chromosome, Limit;
+	for(vector<CChromosome>::iterator it = g_Chromosomes.begin(); it != g_Chromosomes.end(); it++)
+	{
+		if(it->m_Fitness <= Ave)
+			break;
+		From++;
+	}
+	bool Answer;
+	do
+	{
+	Limit = g_Chromosomes.size() - From;
+	Chromosome = (g_Chromosomes.size() - (rand() % Limit)) - 1;
+	Limit = (rand() % g_Chromosomes[Chromosome].m_aGenes.size()) - 1;
+	if(Limit < 0)
+		Limit = 0;
+	Answer = g_Chromosomes[Chromosome].m_aGenes[Limit].m_Gene;
+	}
+	while(Answer);
+	g_Chromosomes[Chromosome].m_aGenes[Limit].m_Gene = true;
 }
 
 void Clear()
@@ -103,14 +133,27 @@ int main()
 		cin >> g_Genes;
 		for(int i = 0; i < g_Count; ++i)
 			g_Chromosomes.push_back(Create());
+		int Rotations;
+		cout << "How many Cycles ?\n";
+		cin >> Rotations;
 		cout << "Chromosomes:\n";
 		Print();
 		cout << "Ranks:\n";
 		Sort();
 		Print(true);
-		CrossOver();
-		Print();
-		cout << "Press Enter (Return) to Reload\n";
+		for(int z = 0; z < Rotations; ++z)
+		{
+			CrossOver();
+			cout << "After CrossOver:\n";
+			Print(false);
+			Mutation();
+			cout << "After Mutation:\n";
+			Print(false);
+			cout << "Ranks:\n";
+			Print(true);
+			Sort();
+			cout << "Press Enter (Return) to Reload\n";
+		}
 		cout << endl;
 		cin.get();
 		Clear();
