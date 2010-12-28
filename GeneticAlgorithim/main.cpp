@@ -1,7 +1,6 @@
 #include <ctime>
 #include<iostream>
 #include<algorithm>
-#include<vector>
 #include"chromosome.h"
 using namespace std;
 
@@ -13,7 +12,11 @@ class CChromosome Create()
 	CChromosome x;
 	x.	m_Fitness = 0;
 	for(int i = 0; i < g_Genes; ++i)
-		x.m_aGenes.push_back((rand()+rand()*rand()) % 2);
+	{
+		m_sGene y;
+		y.m_Gene = (rand()+rand()*rand()) % 2;
+		x.m_aGenes.push_back(y);
+	}
 	x.CalcFitness();
 	return x;
 }
@@ -57,19 +60,30 @@ void CrossOver()
 {
 	//Let's see who's below our threshold
 	int From = 0, Ave = Average(), Genes;
-	bool Even = g_Genes % 2 == 0, Left;
-	Genes = (Even)?g_Genes/2:(g_Genes/2)-1;
-
-	for(vector<CChromosome>::iterator it = g_Chromosomes.begin(); it != g_Chromosomes.end(); it+)
+	bool Even = (g_Genes % 2) == 0;
+	Genes = g_Genes/2;
+	cout << "Average" << Ave << "\n";
+	for(vector<CChromosome>::iterator it = g_Chromosomes.begin(); it != g_Chromosomes.end(); it++)
 	{
-		if(it->m_Fitness < Ave)
+		if(it->m_Fitness <= Ave)
 			break;
 		From++;
 	}
 
-	for(vector<CChromosome>::iterator it = g_Chromosomes.begin() + From; it != g_Chromosomes.end()-1; it++)
+	
+	vector<m_sGene> Temp1;
+	vector<m_sGene> Temp2;
+	int Count = 0;
+	for(int i = From; i < g_Chromosomes.size()-1; ++i)
 	{
-		it->CrossOver((it+1)->GetMe(), Left = !Left, Genes);
+		int Size = g_Chromosomes[i+1].m_aGenes.size();
+		for(int j = 0; j < Genes; ++j)
+		{
+			int Elm = Size - (Genes - j);
+			bool Temp = g_Chromosomes[i].m_aGenes[j].m_Gene;
+			g_Chromosomes[i].m_aGenes[j].m_Gene = g_Chromosomes[i+1].m_aGenes[Elm].m_Gene;
+			g_Chromosomes[i+1].m_aGenes[Elm].m_Gene = Temp;
+		}
 	}
 }
 
@@ -94,6 +108,8 @@ int main()
 		cout << "Ranks:\n";
 		Sort();
 		Print(true);
+		CrossOver();
+		Print();
 		cout << "Press Enter (Return) to Reload\n";
 		cout << endl;
 		cin.get();
